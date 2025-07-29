@@ -12,14 +12,17 @@ return new class extends Migration
         Schema::create('client_gallery', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_id');
+            $table->string('id_group', 100); // <--- Tambah
             $table->enum('type', ['training', 'exhibition', 'visit']);
-            $table->string('title'); // ✅ Title for group of images
+            $table->string('title', 200); // <--- Optional: hadkan ke 200
             $table->string('image_path');
             $table->text('description')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();
-
+        
             $table->foreign('client_id')->references('clientId')->on('clients')->onDelete('cascade');
+        });
+
         });
     }
 
