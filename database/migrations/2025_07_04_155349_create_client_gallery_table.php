@@ -22,8 +22,6 @@ return new class extends Migration
         
             $table->foreign('client_id')->references('clientId')->on('clients')->onDelete('cascade');
         });
-
-        });
     }
 
     public function down(): void
