@@ -65,7 +65,7 @@
     </div>
 </div>
 
-{{-- Project Cards --}}
+{{-- Project Cards (New)--}}
 <section class="bg-white">
     <div class="container mx-auto max-w-7xl px-6 py-16">
 

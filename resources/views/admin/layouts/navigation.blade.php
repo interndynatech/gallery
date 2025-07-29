@@ -30,17 +30,11 @@
                     Dashboard
                 </a>
 
-                <!-- Gallery link -->
-                <a href="{{ route('admin.pages.client.gallery.showAll') }}"
-                    class="p-2 pr-3 font-semibold text-gray-700 @if (request()->routeIs('admin.pages.client.gallery.showAll')) text-teal-500 border-b-4 border-teal-500 @endif">
-                    Gallery
-                </a>
-
                 <!-- Company Profile Dropdown -->
                 <div x-data="{ isOpen: false }" class="relative inline-block">
                     <button @click="isOpen = !isOpen" @click.away="isOpen = false"
                         class="flex items-center p-2 pr-3 font-semibold text-gray-700 @if (request()->routeIs('admin.pages.achievements') || request()->routeIs('admin.pages.orgchart')) 
-    @endif">
+                        @endif">
                         Company Profile
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-2 fill-current transition-colors duration-300"
                             viewBox="0 0 24 24">
@@ -75,9 +69,9 @@
                 <div x-data="{ isOpen: false }" class="relative inline-block">
                     <button @click="isOpen = !isOpen" @click.away="isOpen = false"
                         class="flex items-center p-2 pr-3 font-semibold text-gray-700 
-    @if (request()->routeIs('admin.pages.compProjects') || request()->routeIs('admin.pages.client'))
-        text-teal-500 border-b-4 border-teal-500 
-    @endif">
+                        @if (request()->routeIs('admin.pages.compProjects') || request()->routeIs('admin.pages.client'))
+                            text-teal-500 border-b-4 border-teal-500 
+                        @endif">
                         Projects
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-2 fill-current transition-colors duration-300"
                             viewBox="0 0 24 24">
@@ -113,9 +107,9 @@
                 <div x-data="{ isOpen: false }" class="relative inline-block">
                     <button @click="isOpen = !isOpen" @click.away="isOpen = false"
                         class="flex items-center p-2 pr-3 font-semibold text-gray-700 
-    @if (request()->routeIs('admin.pages.career') || request()->routeIs('admin.pages.applicants'))
-        text-teal-500 border-b-4 border-teal-500 
-    @endif">
+                        @if (request()->routeIs('admin.pages.career') || request()->routeIs('admin.pages.applicants'))
+                            text-teal-500 border-b-4 border-teal-500 
+                        @endif">
                         Careers
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-2 fill-current transition-colors duration-300"
                             viewBox="0 0 24 24">
@@ -151,9 +145,9 @@
                 <div x-data="{ isOpen: false }" class="relative inline-block">
                     <button @click="isOpen = !isOpen" @click.away="isOpen = false"
                         class="flex items-center p-2 pr-3 font-semibold text-gray-700 
-    @if (request()->routeIs('admin.pages.contact') || request()->routeIs('admin.pages.news')) || request()->routeIs('admin.pages.products')) || request()->routeIs('admin.pages.documents'))
-        text-teal-500 border-b-4 border-teal-500 
-    @endif">
+                        @if (request()->routeIs('admin.pages.contact') || request()->routeIs('admin.pages.news')) || request()->routeIs('admin.pages.products')) || request()->routeIs('admin.pages.documents'))
+                            text-teal-500 border-b-4 border-teal-500 
+                        @endif">
                         General
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-2 fill-current transition-colors duration-300"
                             viewBox="0 0 24 24">
@@ -173,6 +167,13 @@
                             <a href="{{ route('admin.pages.products') }}"
                                 class="font-semibold @if (request()->is('admin.pages.products')) text-teal-500 border-teal-500 @endif">
                                 Products
+                            </a>
+                        </div>
+                        <!-- Gallery 2025-->
+                        <div @click="isOpen = false" class="block px-4 py-3 text-sm capitalize text-gray-600 hover:bg-gray-100 hover:text-teal-500 cursor-pointer">
+                            <a href="{{ route('admin.pages.client.gallery.showAll') }}"
+                                class="font-semibold @if (request()->is('admin.pages.client.gallery.showAll')) text-teal-500 border-teal-500 @endif">
+                                Gallery
                             </a>
                         </div>
                         <div @click="isOpen = false" class="block px-4 py-3 text-sm capitalize text-gray-600 hover:bg-gray-100 hover:text-teal-500 cursor-pointer">

@@ -4,6 +4,46 @@
 @section('content')
 @vite('resources/js/app.js')
 
+<style>
+    /* Smooth scrollbar for description */
+    .overflow-y-auto::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-thumb {
+        background: rgba(20, 184, 166, 0.5);
+        border-radius: 4px;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+        background: rgba(20, 184, 166, 0.8);
+    }
+
+    /* Glass morphism effect */
+    .backdrop-blur-sm {
+        backdrop-filter: blur(8px);
+    }
+    
+    .backdrop-blur-md {
+        backdrop-filter: blur(12px);
+    }
+
+    /* Custom animations */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .group:hover .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
+</style>
+
 <!-- Banner -->
 <section class="bg-[#01B6BE] py-16 text-white text-center">
     <div class="container mx-auto px-4">
@@ -129,49 +169,137 @@
         </div>
     </div>
 
-<!-- Lightbox Modal -->
-<div x-show="lightbox.open" x-transition.opacity.duration.300ms
-    class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center z-50 ">
+<!-- Enhanced Lightbox Modal -->
+<div x-show="lightbox.open" 
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0 scale-95"
+     x-transition:enter-end="opacity-100 scale-100"
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="opacity-100 scale-100"
+     x-transition:leave-end="opacity-0 scale-95"
+     class="fixed inset-0 bg-black bg-opacity-25  flex items-center justify-center z-50 p-4">
 
-    <!-- Modal Box -->
-    <div class="relative w-[90%] max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden p-6 md:p-8 border border-gray-200">
-            <!-- Butang pangkah di kanan atas skrin -->
+    <!-- Enhanced Modal Box -->
+    <div class="relative w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+        
+        <!-- Glass Effect Header -->
+        <div class="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white/10 to-transparent"></div>
+        
+        <!-- Close Button - Modern Design -->
         <button @click="lightbox.close()"
-            class="fixed top-6 right-6 bg-red-600 hover:bg-red-700 text-white rounded-full p-2 shadow-lg z-50 transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            class="absolute top-4 right-4 z-50 group bg-white/20 backdrop-blur-sm hover:bg-red-500/90 text-black rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
 
-        <div class="flex flex-col md:flex-row gap-6">
-            <!-- Gambar -->
-            <div class="w-full md:w-2/3 flex flex-col items-center justify-center">
-                <div class="h-[380px] w-full flex items-center justify-center bg-gray-50 border border-gray-200 rounded-xl">
-                    <img :src="'/assets/images/clientGallery/{{ $type }}/' + lightbox.info.image_path"
-                        class="max-h-full max-w-full object-contain rounded-xl shadow-md">
+        <div class="flex flex-col lg:flex-row">
+            <!-- Image Section - Left Side -->
+            <div class="w-full lg:w-2/3 p-6 lg:p-8">
+                <!-- Image Container with Gradient Border -->
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="relative h-[400px] lg:h-[500px] w-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden shadow-inner">
+                        <img :src="'/assets/images/clientGallery/{{ $type }}/' + lightbox.info.image_path"
+                             class="w-full h-full object-contain transition-transform duration-500 hover:scale-105"
+                             :alt="lightbox.info.title">
+                        
+                        <!-- Floating Image Counter -->
+                        <div class="absolute top-4 left-4 bg-black/60 text-black px-3 py-1 rounded-full text-sm font-medium">
+                            <span x-text="(lightbox.currentIndex + 1) + ' / ' + lightbox.images.length"></span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Butang Prev/Next -->
-                <div class="mt-4 flex justify-center gap-4">
+                <!-- Enhanced Navigation Buttons -->
+                <div class="mt-6 flex justify-center items-center gap-6">
                     <button @click="lightbox.prev()"
-                        class="bg-[#f1f1f1] text-sm px-4 py-2 rounded-lg hover:bg-[#e0e0e0] transition">← Prev</button>
+                        class="group flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-black px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed text-lg font-medium">
+                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        <span class="font-medium">Previous</span>
+                    </button>
+                    
+                    <!-- Progress Dots -->
+                    <div class="flex gap-2">
+                        <template x-for="(image, index) in lightbox.images.slice(Math.max(0, lightbox.currentIndex - 2), lightbox.currentIndex + 3)" :key="index">
+                            <div class="w-3 h-3 rounded-full transition-all duration-300"
+                                 :class="index === lightbox.currentIndex ? 'bg-teal-500 scale-125' : 'bg-gray-300 hover:bg-gray-400'"></div>
+                        </template>
+                    </div>
+                    
                     <button @click="lightbox.next()"
-                        class="bg-[#f1f1f1] text-sm px-4 py-2 rounded-lg hover:bg-[#e0e0e0] transition">Next →</button>
+                        class="group flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-black px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed text-lg font-medium">
+                        <span class="font-medium">Next</span>
+                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
-            <!-- Maklumat -->
-            <div class="w-full md:w-1/3 text-sm max-h-[400px] overflow-y-auto pr-2">
-                <h2 class="text-2xl font-semibold text-[#01B6BE] leading-snug" x-text="lightbox.info.title"></h2>
-                <p class="mt-4 text-gray-400 text-xs" x-text="'📅 Date: ' + new Date(lightbox.info.date).toLocaleDateString()"></p>
-                <p class="mt-3 text-gray-700 leading-relaxed text-[15px]" x-text="lightbox.info.description"></p>
+            <!-- Information Section - Right Side -->
+            <div class="w-full lg:w-1/3 bg-gradient-to-b from-gray-50/50 to-white/50 backdrop-blur-sm border-l border-gray-200/50">
+                <div class="p-6 lg:p-8 h-full">
+                    <!-- Title with Icon -->
+                    <div class="flex items-start gap-3 mb-6">
+                        <div class="flex-1">
+                            <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 leading-tight" x-text="lightbox.info.title"></h2>
+                        </div>
+                    </div>
+
+                    <!-- Date Badge -->
+                    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 text-teal-700 px-4 py-2 rounded-full text-sm font-medium mb-6 shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span x-text="new Date(lightbox.info.date).toLocaleDateString('en-US', { 
+                            weekday: 'long', 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                        })"></span>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                            Description
+                        </h3>
+                        <p class="text-gray-700 leading-relaxed mt-2" x-text="lightbox.info.description || 'No description available.'"></p>
+                    </div>
+
+                    <!-- Additional Info Cards -->
+                    <div class="mt-6 space-y-3">
+                        <div class="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-gray-200/50 shadow-sm">
+                            <div class="flex items-center gap-2 text-sm">
+                                <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                </svg>
+                                <span class="font-medium text-gray-600">Type:</span>
+                                <span class="text-purple-600 font-semibold capitalize" x-text="'{{ $type }}'"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-gray-200/50 shadow-sm">
+                            <div class="flex items-center gap-2 text-sm">
+                                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                                <span class="font-medium text-gray-600">Gallery:</span>
+                                <span class="text-green-600 font-semibold" x-text="lightbox.images.length + ' photos'"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Gradient -->
+                <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/10 to-transparent pointer-events-none"></div>
             </div>
         </div>
     </div>
 </div>
-
-
 </div>
 
 @endsection

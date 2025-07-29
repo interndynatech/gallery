@@ -1,3 +1,4 @@
+<!--  new 2025 -->
 @section('title', $pageTitle)
 <meta name="csrf-token" content="{{ csrf_token() }}">
 

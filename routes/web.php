@@ -39,7 +39,7 @@ Route::get('contactUs', [PagesController::class, 'contactUs'])->name('contactUs'
 Route::post('storeContact', [PagesController::class, 'storeContact'])->name('storeContact');
 Route::get('documents', [PagesController::class, 'documents'])->name('documents');
 
-// Galeri Klien (untuk pengguna awam)
+// Galeri Klien (untuk pengguna awam) 2025
 Route::get('/client-gallery/{type}', [ClientGalleryController::class, 'selectClient'])->name('clientGallery');
 Route::get('/client-gallery/{type}/{client_id}', [ClientGalleryController::class, 'clientGallery'])->name('clientGallery.client');
 
@@ -61,7 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::prefix('pages')->as('admin.pages.')->group(function () {
-        //Gallery Client
+        //Gallery Client 2025
         Route::get('client-gallery', [ClientGalleryController::class, 'index'])->name('clientGallery');
         Route::get('/client-gallery/create', [ClientGalleryController::class, 'create'])->name('clients.createClientGallery');
         Route::post('/store-client-gallery', [ClientGalleryController::class, 'store'])->name('clients.storeClientGallery');

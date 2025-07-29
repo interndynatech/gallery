@@ -52,39 +52,35 @@ class PagesController extends Controller
         ]);
     }
 
-//card projects 9 july 2025
+//display project by group card 9 july 2025
    public function projects()
-{
-    $projects = DB::table('mainproject')
-    ->select(DB::raw('MIN(mainProjectId) as mainProjectId'), 'title', DB::raw('MIN(introContent) as introContent'), DB::raw('MIN(imagePath) as imagePath'))
-    ->groupBy('title')
-    ->get();
+    {
+        $projects = DB::table('mainproject')
+        ->select(DB::raw('MIN(mainProjectId) as mainProjectId'), 'title', DB::raw('MIN(introContent) as introContent'), DB::raw('MIN(imagePath) as imagePath'))
+        ->groupBy('title')
+        ->get();
 
-    $clients = DB::table('clients')->get();
-    $pageTitle = 'Projects';
-    //asal $pageTitle = 'Main Projects';
+        $clients = DB::table('clients')->get();
+        $pageTitle = 'Main Projects';
 
-    return view('projects', compact('projects', 'pageTitle', 'clients'));
-
-
-    //return view('projects', compact('projects', 'pageTitle')); // ← tiada folder prefix
-}
+        return view('projects', compact('projects', 'pageTitle', 'clients'));
+    }
 
 
-public function projectGroupDetails($title)
-{
-    $projects = DB::table('mainproject')
-        ->where('title', urldecode($title))
-        ->orderBy('mainProjectId', 'desc') 
-        ->paginate(6); 
+    public function projectGroupDetails($title)
+    {
+        $projects = DB::table('mainproject')
+            ->where('title', urldecode($title))
+            ->orderBy('mainProjectId', 'desc') 
+            ->paginate(6); 
 
-    $pageTitle =urldecode($title);
-    $projectTitle = urldecode($title);
+        $pageTitle =urldecode($title);
+        $projectTitle = urldecode($title);
 
-    return view('projectGroupDetails', compact('projects', 'pageTitle', 'projectTitle'));
-}
+        return view('projectGroupDetails', compact('projects', 'pageTitle', 'projectTitle'));
+    }
 
-//end card projects 9 july 2025
+    //end card projects 9 july 2025
 
     public function projectDetails($id)
     {
